@@ -5,5 +5,4 @@ It only works on windows for now - didn't have my linux machine on me when I sta
 # How to compile
 one of the following:
 - `cl /EHsc main.cpp Player.cpp User32.lib`
-- add g++ version soon
-//as we need to explicitly include the windows shite for some reason
+- `g++ main.cpp Player.cpp` lol gcc compiler mogs

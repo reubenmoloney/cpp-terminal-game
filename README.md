@@ -4,5 +4,5 @@ It only works on windows for now - didn't have my linux machine on me when I sta
 
 # How to compile
 one of the following:
-- `cl /EHsc main.cpp Player.cpp User32.lib`
-- `g++ main.cpp Player.cpp` lol gcc compiler mogs
+- `cl /EHsc main.cpp Player.cpp Map.cpp User32.lib`
+- `g++ main.cpp Player.cpp Map.cpp` lol gcc compiler mogs

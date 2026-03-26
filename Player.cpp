@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <string>
 
 Player::Player(int playerX = 0, int playerY = 0, int playerSpeed = 1){
 	x = playerX;
@@ -9,6 +10,14 @@ Player::Player(int playerX = 0, int playerY = 0, int playerSpeed = 1){
 void Player::setPos(int newX, int newY){
 	x = newX;
 	y = newY;
+}
+
+std::string Player::getPos(){
+	std::string position;
+	position += std::to_string(x);
+	position += ",";
+	position += std::to_string(y);
+	return position;
 }
 
 void Player::setX(int newX){
@@ -28,11 +37,11 @@ int Player::getY(){
 }
 
 void Player::goUp(){
-	y += speed;
+	y -= speed;
 }
 
 void Player::goDown(){
-	y -= speed;
+	y += speed;
 }
 
 void Player::goLeft(){

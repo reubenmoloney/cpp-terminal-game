@@ -1,5 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+#include <string>
 
 class Player {
 private: 
@@ -18,6 +19,7 @@ public:
 	void goDown();
 	void goLeft();
 	void goRight();
+	std::string getPos();
 };
 
 #endif

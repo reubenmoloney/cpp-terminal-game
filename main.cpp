@@ -1,9 +1,10 @@
-//to compile: cl /EHsc yourfile.cpp User32.lib
+//to compile: cl /EHsc main.cpp Player.cpp Map.cpp User32.lib
 //as we need to explicitly include the windows shite for some reason
 
 #include <iostream>
 #include <windows.h>
 #include "Player.h"
+#include "Map.h"
 
 int up = 87;
 int down = 83;
@@ -16,8 +17,8 @@ int width = 100;
 int height = 100;
 int main() {
 
-	Player player(50,50,1);
-
+	Player player(0,0,1);
+	Map map;
 	//game loop
 	while(true){
 		///check keyoard input
@@ -41,8 +42,11 @@ int main() {
 		}
 		
 		//calculate players position based on the input
-		std::cout << player.getX() << ", " << player.getY() << "\n";
-
+		//std::cout << player.getX() << ", " << player.getY() << "\n";
+		map.flip();
+		map.drawPlayer(player.getX(), player.getY());
+		map.print();
+		std::cout << player.getPos();
 
 
 

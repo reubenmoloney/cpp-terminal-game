@@ -12,6 +12,7 @@ public:
     void drawPlayer(int playerX, int playerY);
     void print();
     void flip();
+    void drawEnemy(int x, int y);
 };
 
 #endif

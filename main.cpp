@@ -13,11 +13,11 @@ int right = 68;
 int escape = 27;
 
 
-int width = 100;
-int height = 100;
+int width = 40;
+int height = 30;
 int main() {
 
-	Player player(0,0,1);
+	Player player(0,0,1, width, height);
 	Map map;
 	//game loop
 	while(true){
@@ -50,7 +50,7 @@ int main() {
 
 
 
-		Sleep(100);
+		Sleep(16);
 	}
 	return 0;
 }

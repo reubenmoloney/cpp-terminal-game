@@ -1,9 +1,11 @@
 #include "Player.h"
 #include <string>
 
-Player::Player(int playerX = 0, int playerY = 0, int playerSpeed = 1){
+Player::Player(int playerX = 0, int playerY = 0, int playerSpeed = 1, int canvaW = 30, int canvaH = 40){
 	x = playerX;
 	y = playerY;
+	canvaWidth = canvaW;
+	canvaHeight = canvaH;
 	speed = playerSpeed;
 }
 
@@ -38,18 +40,30 @@ int Player::getY(){
 
 void Player::goUp(){
 	y -= speed;
+	if(y < 0){
+		y = 0;
+	}
 }
 
 void Player::goDown(){
 	y += speed;
+	if(y >= canvaHeight){
+		y = canvaHeight;
+	}
 }
 
 void Player::goLeft(){
 	x -= speed;
+	if(x < 0){
+		x = 0;
+	}
 }
 
 void Player::goRight(){
 	x += speed;
+	if(speed >= canvaWidth){
+		x = canvaWidth;
+	}
 }
 
 

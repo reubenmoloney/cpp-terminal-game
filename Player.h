@@ -7,9 +7,11 @@ private:
 	int x;
 	int y;
 	int speed;
+	int canvaWidth;
+	int canvaHeight;
 
 public:
-	Player(int playerX, int playerY, int playerSpeed);
+	Player(int playerX, int playerY, int playerSpeed, int canvaWidth, int canvaHeight);
 	void setPos(int newX, int newY);
 	void setX(int newX);
 	void setY(int newY);

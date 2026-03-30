@@ -18,7 +18,7 @@ int width = 40;
 int height = 30;
 int main() {
 
-	Player player(0,0,1, width, height);
+	Player player(0,0,2, width, height);
 	Enemy enemy(width,height,1,width,height);
 	Map map;
 	//game loop
@@ -50,11 +50,11 @@ int main() {
 		map.drawPlayer(player.getX(), player.getY());
 		map.drawEnemy(enemy.getX(), enemy.getY());
 		map.print();
-		std::cout << player.getPos();
+		std::cout << player.getPos() << " | " << enemy.getPos();
 
 
 
-		Sleep(16);
+		Sleep(50);
 	}
 	return 0;
 }

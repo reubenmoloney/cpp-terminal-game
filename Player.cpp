@@ -47,7 +47,7 @@ void Player::goUp(){
 
 void Player::goDown(){
 	y += speed;
-	if(y >= canvaHeight){
+	if(y > canvaHeight){
 		y = canvaHeight;
 	}
 }
@@ -61,7 +61,7 @@ void Player::goLeft(){
 
 void Player::goRight(){
 	x += speed;
-	if(speed >= canvaWidth){
+	if(speed > canvaWidth){
 		x = canvaWidth;
 	}
 }

@@ -14,18 +14,6 @@ void Map::flip(){
 }
 
 void Map::drawPlayer(int x, int y){
-    if(x > width){
-        x = width;
-    }
-    if(x < 0){
-        x = 0;
-    }
-    if(y > height){
-        y = height;
-    }
-    if(y < 0){
-        y =0;
-    }
     map[y][x] = 'P';
 }
 

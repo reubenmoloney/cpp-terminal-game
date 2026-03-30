@@ -1,5 +1,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
+#include <string>
 
 class Enemy {
 private:
@@ -13,6 +14,7 @@ public:
 	int getX();
 	int getY();
 	void goTowards(int playerX, int playerY);
+	std::string getPos();
 };
 
 #endif

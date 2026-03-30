@@ -4,7 +4,7 @@
 class Map {
 private:
     static const int height = 30;
-    static const int width = 40;
+    static const int width = 90;
     char map[height][width];
 
 public:
@@ -13,6 +13,7 @@ public:
     void print();
     void flip();
     void drawEnemy(int x, int y);
+    void gameOver();
 };
 
 #endif

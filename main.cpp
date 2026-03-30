@@ -13,8 +13,29 @@ int left = 65;
 int right = 68; 
 int escape = 27;
 
+bool checkCollision(int x1, int y1, int x2, int y2){
+	if(x1 == x2 && y1 == y2){
+		return true;
+	}
+	return false;
+}
 
-int width = 40;
+std::string getHealthBar(int health){
+	if(health < 0){
+		health = 0;
+	}
+	std::string tempBar = "[";
+	for(int i = 0; i < health; i++){
+		tempBar += "|";
+	}
+	for(int i = 0; i < 100-health; i++){
+		tempBar += ".";
+	}
+	tempBar += "]";
+	return tempBar;
+}
+
+int width = 90;
 int height = 30;
 int main() {
 
@@ -43,18 +64,25 @@ int main() {
 			return 0;
 		}
 		enemy.goTowards(player.getX(), player.getY());
-		
+		if(checkCollision(player.getX(), player.getY(), enemy.getX(), enemy.getY())){
+			player.lowerHealth(5);
+		}
+		if(player.getHealth() < 0){
+			break;
+		}
 		//calculate players position based on the input
 		//std::cout << player.getX() << ", " << player.getY() << "\n";
 		map.flip();
 		map.drawPlayer(player.getX(), player.getY());
 		map.drawEnemy(enemy.getX(), enemy.getY());
 		map.print();
-		std::cout << player.getPos() << " | " << enemy.getPos();
-
-
+		std::cout << "Health" << getHealthBar(player.getHealth()) << " | " << player.getPos() << " | " << enemy.getPos();
 
 		Sleep(50);
 	}
+
+	map.flip();
+	map.gameOver();
+	map.print();
 	return 0;
 }

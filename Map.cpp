@@ -32,3 +32,17 @@ void Map::print() {
     }
     std::cout << output;
 }
+
+void Map::gameOver(){
+    int w = width/2 -5;
+    int h = height/2 - 1;
+    map[h][w] = 'G';
+    map[h][w+1] = 'A';
+    map[h][w+2] = 'M';
+    map[h][w+3] = 'E';
+    map[h][w+4] = ' ';
+    map[h][w+5] = 'O';
+    map[h][w+6] = 'V';
+    map[h][w+7] = 'E';
+    map[h][w+8] = 'R';
+}

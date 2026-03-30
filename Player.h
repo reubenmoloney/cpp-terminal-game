@@ -9,6 +9,7 @@ private:
 	int speed;
 	int canvaWidth;
 	int canvaHeight;
+	int health = 100;
 
 public:
 	Player(int playerX, int playerY, int playerSpeed, int canvaWidth, int canvaHeight);
@@ -22,6 +23,8 @@ public:
 	void goLeft();
 	void goRight();
 	std::string getPos();
+	int getHealth();
+	void lowerHealth(int ammount);
 };
 
 #endif

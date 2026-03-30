@@ -66,6 +66,14 @@ void Player::goRight(){
 	}
 }
 
+int Player::getHealth(){
+	return health;
+}
+
+void Player::lowerHealth(int ammount){
+	health -= ammount;
+}
+
 
 
 

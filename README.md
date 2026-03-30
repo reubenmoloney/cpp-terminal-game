@@ -11,13 +11,13 @@ one of the following:
 ### main.cpp
 This file contains the game loop, and call the function of all the other objects (so far)
 
-### map.cpp
+### Map.cpp
 This file contains all the logic for the map, it has public function for clearing, printing, and drawing things on the map.
 
-### player.cpp
+### Player.cpp
 This file contains all the internal logic for the player - it holds the position, health, and speed of the player. It has public functions for movement, get/setting its position, and get/setting its health.
 
-## Enemy.cpp
+### Enemy.cpp
 This file contains all the internal logic for the enemy - it holds the position and speed. It has public functions for getting its position, and telling it to go towards a point.
 
 ## Current

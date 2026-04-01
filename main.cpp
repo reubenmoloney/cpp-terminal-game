@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Enemy.h"
+#include <vector>
 
 int up = 87;
 int down = 83;
@@ -40,7 +41,11 @@ int height = 30;
 int main() {
 
 	Player player(0,0,2, width, height);
-	Enemy enemy(width,height,1,width,height);
+	
+	//create enemies array/vector
+	std::vector<Enemy> enemies;
+	enemies.push_back(Enemy(width,height,1,width,height));
+	enemies.push_back(Enemy(width,0,1,width,height));
 	Map map;
 	//game loop
 	while(true){
@@ -63,10 +68,15 @@ int main() {
 		if(GetAsyncKeyState(escape) & 0x8000){
 			return 0;
 		}
-		enemy.goTowards(player.getX(), player.getY());
-		if(checkCollision(player.getX(), player.getY(), enemy.getX(), enemy.getY())){
-			player.lowerHealth(5);
+
+		//handle enemies logic
+		for(int i = 0; i < enemies.size(); i++){
+			enemies[i].goTowards(player.getX(), player.getY());
+			if(checkCollision(player.getX(), player.getY(), enemies[i].getX(), enemies[i].getY())){
+				player.lowerHealth(5);
+			}
 		}
+	
 		if(player.getHealth() < 0){
 			break;
 		}
@@ -74,9 +84,11 @@ int main() {
 		//std::cout << player.getX() << ", " << player.getY() << "\n";
 		map.flip();
 		map.drawPlayer(player.getX(), player.getY());
-		map.drawEnemy(enemy.getX(), enemy.getY());
+		for(int i = 0; i < enemies.size(); i++){
+			map.drawEnemy(enemies[i].getX(), enemies[i].getY());
+		}
 		map.print();
-		std::cout << "Health" << getHealthBar(player.getHealth()) << " | " << player.getPos() << " | " << enemy.getPos();
+		std::cout << "Health" << getHealthBar(player.getHealth()) << " | " << player.getPos();
 
 		Sleep(50);
 	}

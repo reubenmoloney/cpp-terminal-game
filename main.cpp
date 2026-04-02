@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Enemy.h"
+#include "Bullet.h"
 #include <vector>
 
 int up = 87;
@@ -42,6 +43,9 @@ int main() {
 
 	Player player(0,0,2, width, height);
 	
+  //first bullet test
+  Bullet bullet(10,10,'s');
+
 	//create enemies array/vector
 	std::vector<Enemy> enemies;
 	enemies.push_back(Enemy(width,height,1,width,height));
@@ -69,12 +73,18 @@ int main() {
 			return 0;
 		}
 
+    //hadle bullet logic
+    bullet.move();
+
 		//handle enemies logic
 		for(int i = 0; i < enemies.size(); i++){
-			enemies[i].goTowards(player.getX(), player.getY());
-			if(checkCollision(player.getX(), player.getY(), enemies[i].getX(), enemies[i].getY())){
+			//move towards the player
+      enemies[i].goTowards(player.getX(), player.getY());
+			//check if were colliding with the player
+      if(checkCollision(player.getX(), player.getY(), enemies[i].getX(), enemies[i].getY())){
 				player.lowerHealth(5);
 			}
+      //now check for bullet collisions
 		}
 	
 		if(player.getHealth() < 0){
@@ -82,11 +92,14 @@ int main() {
 		}
 		//calculate players position based on the input
 		//std::cout << player.getX() << ", " << player.getY() << "\n";
+    
+    //time to draw!
 		map.flip();
 		map.drawPlayer(player.getX(), player.getY());
 		for(int i = 0; i < enemies.size(); i++){
 			map.drawEnemy(enemies[i].getX(), enemies[i].getY());
 		}
+    map.drawBullet(bullet.getX(), bullet.getY());
 		map.print();
 		std::cout << "Health" << getHealthBar(player.getHealth()) << " | " << player.getPos();
 

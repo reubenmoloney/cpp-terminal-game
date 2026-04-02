@@ -21,6 +21,12 @@ void Map::drawEnemy(int x, int y){
     map[y][x] = 'E';
 }
 
+void Map::drawBullet(int x, int y){
+    if(x > width-1 || y > height-1){
+      return;
+    }
+    map[y][x] = '+';
+}
 void Map::print() {
     std::string output = "\n\n\n\n\n\n";
 

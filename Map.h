@@ -13,6 +13,7 @@ public:
     void print();
     void flip();
     void drawEnemy(int x, int y);
+    void drawBullet(int x, int y);
     void gameOver();
 };
 

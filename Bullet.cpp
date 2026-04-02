@@ -14,7 +14,7 @@ int Bullet::getY(){
   return y;
 }
 
-int Bullet::move(){
+void Bullet::move(){
   if(direction == 'n' || direction == 'N'){
     y -= speed;
   }else{

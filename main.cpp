@@ -2,20 +2,32 @@
 //as we need to explicitly include the windows shite for some reason
 
 #include <iostream>
-#include <windows.h>
+#include <windows.h>//this is for keyboard input
 #include "Player.h"
 #include "Map.h"
 #include "Enemy.h"
 #include "Bullet.h"
 #include <vector>
+#include <random>
 
+
+int width = 90;
+int height = 30;
+
+//FROM HERE
+std::random_device rd;
+std::mt19937 rng(rd());  // Mersenne Twister engine
+
+std::uniform_int_distribution<int> xDist(0, width - 1);
+std::uniform_int_distribution<int> yDist(0, height - 1);
+//TO HERE - IS NOT MY CODE
 int up = 87;
 int down = 83;
 int left = 65;
 int right = 68; 
 int escape = 27;
 
-int score = 0;
+
 
 bool checkCollision(int x1, int y1, int x2, int y2){
 	if(x1 == x2 && y1 == y2){
@@ -51,9 +63,13 @@ void shoot(int sourceX, int sourceY){
   bullets.push_back(Bullet(sourceX, sourceY, 'E'));
 }
 
-int width = 90;
-int height = 30;
+
 int main() {
+	int score = 0;
+
+	int roundDuration = 100;
+	int round = 1;
+	int roundTimer = 0;
 
 	Player player(0,0,2, width, height);
 
@@ -124,7 +140,7 @@ int main() {
 					continue;
 				}
 				enemyInt++;
-			}	
+			}
 			bulletInt++;
 		}
 	
@@ -147,6 +163,15 @@ int main() {
 		map.print();
 		std::cout << "Health" << getHealthBar(player.getHealth()) << " | " << player.getPos() << " | " << bullets.size();
 
+		//ROUND LOGIC:
+		roundTimer--;
+		if(roundTimer < 0){
+			round++;
+			for(int i = 0; i < round; i++){
+				enemies.push_back(Enemy(xDist(rng), yDist(rng), 1, width, height));//this line is not my code
+			}
+			roundTimer = roundDuration;
+		}
 		Sleep(50);
 	}
 

@@ -31,3 +31,4 @@ So far there is a matrix in which the P can be moved around using wasd, an enemy
 
 ## Notes
 - header files are weird
+- instead of my O(n^2) collision detection, im thinking a system where we have a map with entity-coord could be better. If any of the coords in the map match then there is a collision, and we can use the coord as a key to get the entities that are colliding from the map. Just a thought.

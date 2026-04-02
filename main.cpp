@@ -37,14 +37,22 @@ std::string getHealthBar(int health){
 	return tempBar;
 }
 
+//create bullet array and shoot function (it will add bullets to the array)
+std::vector<Bullet> bullets;
+int bulletInt = 0;
+int bulletLifespan = 15;
+void shoot(int sourceX, int sourceY){
+  bullets.push_back(Bullet(sourceX, sourceY, 'N'));
+  bullets.push_back(Bullet(sourceX, sourceY, 'S'));
+  bullets.push_back(Bullet(sourceX, sourceY, 'W'));
+  bullets.push_back(Bullet(sourceX, sourceY, 'E'));
+}
+
 int width = 90;
 int height = 30;
 int main() {
 
 	Player player(0,0,2, width, height);
-	
-  //first bullet test
-  Bullet bullet(10,10,'s');
 
 	//create enemies array/vector
 	std::vector<Enemy> enemies;
@@ -67,24 +75,37 @@ int main() {
 			player.goRight();
 		}
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-        	    std::cout << "SPACE\n";
-        	}
+            shoot(player.getX(), player.getY());
+        }
 		if(GetAsyncKeyState(escape) & 0x8000){
 			return 0;
 		}
 
-    //hadle bullet logic
-    bullet.move();
+		//hadle bullet logic
+		for(int i = 0; i < bullets.size(); i++){
+			bullets[i].move();
+		}
+		//destroy aged out bullets
+		bulletInt = 0;
+		while(bulletInt < bullets.size()){
+			if(bullets[bulletInt].getAge() > bulletLifespan){
+				//destroy the bullet - easier than I thought
+				bullets.erase(bullets.begin() + bulletInt);
+			}else{
+				bulletInt++;
+			}
+
+		}
 
 		//handle enemies logic
 		for(int i = 0; i < enemies.size(); i++){
 			//move towards the player
-      enemies[i].goTowards(player.getX(), player.getY());
+			enemies[i].goTowards(player.getX(), player.getY());
 			//check if were colliding with the player
-      if(checkCollision(player.getX(), player.getY(), enemies[i].getX(), enemies[i].getY())){
+			if(checkCollision(player.getX(), player.getY(), enemies[i].getX(), enemies[i].getY())){
 				player.lowerHealth(5);
 			}
-      //now check for bullet collisions
+			//TODO: now check for bullet collisions
 		}
 	
 		if(player.getHealth() < 0){
@@ -93,15 +114,18 @@ int main() {
 		//calculate players position based on the input
 		//std::cout << player.getX() << ", " << player.getY() << "\n";
     
-    //time to draw!
+    	//time to draw!
 		map.flip();
 		map.drawPlayer(player.getX(), player.getY());
 		for(int i = 0; i < enemies.size(); i++){
 			map.drawEnemy(enemies[i].getX(), enemies[i].getY());
 		}
-    map.drawBullet(bullet.getX(), bullet.getY());
+		for(int i = 0; i < bullets.size(); i++){
+			map.drawBullet(bullets[i].getX(), bullets[i].getY());
+		}
+    
 		map.print();
-		std::cout << "Health" << getHealthBar(player.getHealth()) << " | " << player.getPos();
+		std::cout << "Health" << getHealthBar(player.getHealth()) << " | " << player.getPos() << " | " << bullets.size();
 
 		Sleep(50);
 	}

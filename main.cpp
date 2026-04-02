@@ -15,6 +15,8 @@ int left = 65;
 int right = 68; 
 int escape = 27;
 
+int score = 0;
+
 bool checkCollision(int x1, int y1, int x2, int y2){
 	if(x1 == x2 && y1 == y2){
 		return true;
@@ -39,7 +41,8 @@ std::string getHealthBar(int health){
 
 //create bullet array and shoot function (it will add bullets to the array)
 std::vector<Bullet> bullets;
-int bulletInt = 0;
+int bulletInt = 0;//for iterating
+int enemyInt = 0;//for iterating
 int bulletLifespan = 15;
 void shoot(int sourceX, int sourceY){
   bullets.push_back(Bullet(sourceX, sourceY, 'N'));
@@ -78,7 +81,7 @@ int main() {
             shoot(player.getX(), player.getY());
         }
 		if(GetAsyncKeyState(escape) & 0x8000){
-			return 0;
+			break;
 		}
 
 		//hadle bullet logic
@@ -105,7 +108,24 @@ int main() {
 			if(checkCollision(player.getX(), player.getY(), enemies[i].getX(), enemies[i].getY())){
 				player.lowerHealth(5);
 			}
-			//TODO: now check for bullet collisions
+			
+		}
+		//TODO: now check for bullet collisions
+		bulletInt = 0;
+		while(bulletInt < bullets.size()){
+			enemyInt = 0;		
+			while(enemyInt < enemies.size()){
+				if(bullets[bulletInt].getX() == enemies[enemyInt].getX() && bullets[bulletInt].getY() == enemies[enemyInt].getY()){
+					bullets.erase(bullets.begin() + bulletInt);
+					enemies.erase(enemies.begin() + enemyInt);
+					bulletInt--;
+					enemyInt--;
+					score += 25;
+					continue;
+				}
+				enemyInt++;
+			}	
+			bulletInt++;
 		}
 	
 		if(player.getHealth() < 0){
@@ -133,5 +153,6 @@ int main() {
 	map.flip();
 	map.gameOver();
 	map.print();
+	std::cout << "Score: " << score;
 	return 0;
 }

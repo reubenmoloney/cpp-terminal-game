@@ -1,16 +1,22 @@
 #include "Map.h"
 #include <iostream>
+#include <string>
 
 Map::Map(){
     flip();
+    for(int i = 0; i < width + 2; i++){
+        topBar += "-";
+    }
+    topBar += "\n";
 }
 
 void Map::flip(){
     for(int i = 0; i<height; i++){
         for(int j = 0; j<width; j++){
-            map[i][j] = '.';
+            map[i][j] = ' ';
         }
     }
+    
 }
 
 void Map::drawPlayer(int x, int y){
@@ -30,12 +36,17 @@ void Map::drawBullet(int x, int y){
 void Map::print() {
     std::string output = "\n\n\n\n\n\n";
 
+    output += topBar;
+
     for(int y = 0; y<height; y++){
+        output+= "|";
         for(int x = 0; x<width; x++){
             output += map[y][x];
         }
-        output += "\n";
+        output+= "|\n";
     }
+    output += topBar;
+
     std::cout << output;
 }
 

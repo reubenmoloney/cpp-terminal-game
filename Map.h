@@ -1,11 +1,13 @@
 #ifndef MAP_H
 #define MAP_H
+#include <string>
 
 class Map {
 private:
     static const int height = 30;
     static const int width = 90;
     char map[height][width];
+    std::string topBar;
 
 public:
     Map();

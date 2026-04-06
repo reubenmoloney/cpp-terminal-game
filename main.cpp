@@ -9,7 +9,8 @@
 #include "Bullet.h"
 #include <vector>
 #include <random>
-
+#include <set>
+#include <algorithm>
 
 int width = 90;
 int height = 30;
@@ -26,8 +27,6 @@ int down = 83;
 int left = 65;
 int right = 68; 
 int escape = 27;
-
-
 
 bool checkCollision(int x1, int y1, int x2, int y2){
 	if(x1 == x2 && y1 == y2){
@@ -104,17 +103,7 @@ int main() {
 		for(int i = 0; i < bullets.size(); i++){
 			bullets[i].move();
 		}
-		//destroy aged out bullets
-		bulletInt = 0;
-		while(bulletInt < bullets.size()){
-			if(bullets[bulletInt].getAge() > bulletLifespan){
-				//destroy the bullet - easier than I thought
-				bullets.erase(bullets.begin() + bulletInt);
-			}else{
-				bulletInt++;
-			}
-
-		}
+		
 
 		//handle enemies logic
 		for(int i = 0; i < enemies.size(); i++){
@@ -127,22 +116,39 @@ int main() {
 			
 		}
 		//TODO: now check for bullet collisions
-		bulletInt = 0;
-		while(bulletInt < bullets.size()){
-			enemyInt = 0;		
-			while(enemyInt < enemies.size()){
-				if(bullets[bulletInt].getX() == enemies[enemyInt].getX() && bullets[bulletInt].getY() == enemies[enemyInt].getY()){
-					bullets.erase(bullets.begin() + bulletInt);
-					enemies.erase(enemies.begin() + enemyInt);
-					bulletInt--;
-					enemyInt--;
-					score += 25;
-					continue;
-				}
-				enemyInt++;
+		std::vector<int> deadBullets;
+
+		//aged bullets
+		for(int i = 0; i < bullets.size(); i++){
+			if(bullets[i].getAge() > bulletLifespan){
+				deadBullets.push_back(i);
 			}
-			bulletInt++;
 		}
+
+		std::vector<int> deadEnemies;
+		for(int i = 0; i < bullets.size(); i++){
+			for(int j = 0; j < enemies.size(); j++){
+				if(bullets[i].getX() == enemies[j].getX() && bullets[i].getY() == enemies[j].getY()){
+					deadBullets.push_back(i);
+					deadEnemies.push_back(j);//im thinking I could remove the enemy and then just break? It could improve performance?
+				}
+			}
+		}
+
+		//sort the two arrays of edicies and remove dupes
+		std::sort(deadBullets.rbegin(), deadBullets.rend());
+		std::sort(deadEnemies.rbegin(), deadEnemies.rend());
+
+		//remove idetified objects from the vectors
+		for(int i = deadBullets.size(); i >= 0; i--){
+			bullets.erase(bullets.begin() + deadBullets[i]);
+		}
+
+		for(int i = deadEnemies.size(); i >= 0; i--){
+			enemies.erase(enemies.begin() + deadEnemies[i]);
+		}
+
+		
 	
 		if(player.getHealth() < 0){
 			break;
